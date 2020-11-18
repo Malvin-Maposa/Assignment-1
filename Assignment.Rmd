@@ -1,0 +1,25 @@
+---
+title: "Assignment"
+author: "Malvin"
+date: "18/11/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+```
+
+# Question 1
+## 1.1
+
+```{r}
+a <- 5.0
+c <- 10
+t <- 12
+B <- a+c/t
+```
+The answer for b = `r B`
