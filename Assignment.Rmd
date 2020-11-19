@@ -9,8 +9,9 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-```{r}
+```{r, echo=FALSE,message=FALSE}
 library(tidyverse)
+library(ggplot2)
 ```
 
 # Question 1
@@ -23,3 +24,142 @@ t <- 12
 B <- a+c/t
 ```
 The answer for b = `r B`
+
+
+```{r}
+vec_1 <- c(44, 5, 0, "k")
+vec_2 <- c(1, 2, 3, FALSE)
+vec_3 <- c("a", "b", "c", TRUE)
+vec_4 <- c(1, 2, 3, "4")
+
+a<-typeof(vec_1)
+b<-typeof(vec_2)
+c<-typeof(vec_3)
+d<-typeof(vec_4)
+```
+the first vector is a `r a` vector
+
+the second vector is a `r b` vector
+
+the third vector is a `r c` vector
+
+the last vector is a `r d` vector
+
+# 1.2 conditional Subsetting
+### 1.2.1
+```{r}
+vec <- c(141.2741, 141.8392, 140.5730,NA, 141.3571, 139.8689, 
+         137.9384, NA,139.6620, 138.2521, 138.8635, 141.3885, NA)
+
+vec_1<-c(na.omit(vec,na.rm=TRUE))
+```
+the new vector list is `r vec_1`
+
+I used na.omit to remove all missing values to the "vec" vector that was given
+
+### 1.2.2
+
+```{r}
+vec_2 <-c(subset(vec,is.na(vec)))
+```
+the new vector of missing values is `r vec_2`
+
+I subset the vector into only giving me a list with missing values
+
+
+### 1.2.3
+
+```{r}
+len<-length(vec_2)
+```
+There are `r len` missing values in vec
+
+### 1.2.4
+
+```{r}
+student<-c("First Student","Second Student","Third Student")
+name<-c("Malvin","Rotondwa","Heavy")
+surname<-c("Maposa","Jacobs","Petla")
+age<-c(19,25,46)
+gender<-c("Male","Female","Male")
+df<-data.frame(student,name,surname,age,gender)
+print(df)
+```
+
+
+# Question 2:Functions in R
+
+```{r}
+t<-c(1,2,3,4,5)
+mean_function<-function(t){
+  z<-mean(t,na.rm=TRUE)
+  return(z)
+}
+mean_function(t)
+```
+the mean is `r t`
+
+
+
+
+
+
+
+
+
+
+
+
+# Question 3
+### 3.1
+
+```{r}
+g <- c("MALE","FEMALE","FEMALE","MALE","FEMALE","MALE","MALE","FEMALE", "MALE","MALE","FEMALE","MALE","MALE",
+"FEMALE","MALE","MALE","MALE")
+ifelse(g=="MALE",1,2)
+```
+### 3.2.1
+
+```{r}
+x <- rnorm(1000, 120, 5)
+y <- sample(c("M","F"),size = 1000, replace = TRUE)
+df<-cbind(x,y)
+```
+
+### 3.2.2
+
+```{r}
+df <- data.frame(cbind(x,y))
+```
+
+### 3.2.3
+
+
+```{r}
+df %>% group_by(y) %>% count()
+```
+
+### 3.2.4
+```{r}
+df %>% group_by(y) %>% count() %>% 
+  ggplot(aes(x=y,y=n,fill=y))+
+  geom_col()+
+  labs(title="Total number of Males and Memales",x="Gender",y="total number of males and females")
+```
+
+
+### 3.2.5
+
+```{r}
+df$x<-as.double(df$x)
+df<-df %>% group_by(y) %>% 
+  mutate(total=sum(x))
+print(df)
+```
+```{r}
+df %>%
+  ggplot(aes(x=y,y=total,fill=y))+
+  geom_col()
+```
+
+
